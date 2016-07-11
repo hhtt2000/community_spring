@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.demo.mapper.AdminMapper">
+
+	<insert id="createBoardCategory">
+		insert into tbl_board_category (boardType, boardName, role)
+		values (#{boardType}, #{boardName}, #{role})
+	</insert>
+
+	<select id="getClaimList" resultType="ClaimVO">
+		select * from tbl_claim
+		
+		<include refid="search"></include>
+		
+		order by cno desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<update id="updateClaimStatus">
+		update tbl_claim
+		set status = #{status}
+		where cno = #{cno}
+	</update>
+	
+	<delete id="deleteReplies">
+		delete from tbl_reply
+		where bno = #{bno}
+	</delete>
+	
+	<select id="countClaimList" resultType="int">
+		select
+			count(cno)
+		from
+			tbl_claim
+		
+		<include refid="search"></include>
+	</select>
+	
+	<select id="readClaim" resultType="ClaimVO">
+		select *
+		from tbl_claim
+		where cno = #{cno}
+	</select>
+	
+	<sql id="search">
+		<if test="searchType != null and searchType != ''.toString()">
+			where
+			<if test="searchType == 't'.toString()">
+				title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				claimer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				( title like CONCAT('%', #{keyword}, '%')
+					OR content like CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				( content like CONCAT('%', #{keyword}, '%')
+					OR claimer like CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				( title like CONCAT('%', #{keyword}, '%')
+					OR content like CONCAT('%', #{keyword}, '%')
+					OR claimer like CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql>
+</mapper>

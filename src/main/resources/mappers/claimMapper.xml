@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.demo.mapper.ClaimMapper">
+
+	<insert id="create">
+		insert into tbl_claim (claimer, title, content, url, bno
+		<if test="rno != null">
+			, rno
+		</if>
+		)
+		values (#{claimer}, #{title}, #{content}, #{url}, #{bno}
+		<if test="rno != null">
+			, #{rno}
+		</if>
+		)
+		
+	</insert>
+	
+	<select id="read" resultType="ClaimVO">
+		select
+			cno, claimer, title, content, bno, rno, regdate, status, url
+		from
+			tbl_claim
+		where cno = #{cno}
+	</select>
+
+	<update id="update">
+		update tbl_claim
+		set title = #{title}, content = #{content}
+		where cno = #{cno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_claim where cno = #{cno}
+	</delete>
+
+</mapper>

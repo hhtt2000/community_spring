@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.demo.mapper.UserMapper">
+
+	<select id="login" resultType="UserVO">
+		select userid, userpw, username, role, upoint
+		from tbl_user
+		where userid = #{userid} and userpw = #{userpw}
+	</select>
+	
+	<update id="keepLogin">
+		update tbl_user
+		set sessionkey = #{sessionId}, sessionlimit = #{next}
+		where userid = #{userid}
+	</update>
+	
+	<select id="checkUserWithSessionKey" resultType="UserVO">
+		select * from tbl_user
+		where sessionkey = #{value} and sessionlimit > now()
+	</select>
+	
+	<update id="updateUpoint">
+		update tbl_user
+		set upoint = upoint + #{upoint}, role = #{role}
+		where userid = #{userid}
+	</update>
+
+	<select id="getUserLevelInfo" resultType="UserVO">
+		select upoint, role
+		from tbl_user
+		where userid = #{userid}
+	</select>
+	
+	<insert id="register">
+		insert into tbl_user (userid, userpw, username, email, role)
+		values (#{userid}, #{userpw}, #{username}, #{email}, #{role})
+	</insert>
+</mapper>
