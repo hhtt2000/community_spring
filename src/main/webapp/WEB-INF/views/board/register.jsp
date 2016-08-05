@@ -4,6 +4,29 @@
 <%@ include file="../include/header.jsp" %>
 
 <style>
+.popup {
+position: absolute;
+}
+.img-back {
+background-color: gray;
+opacity: 0.5;
+width: 100%;
+height: 300%;
+overflow: hidden;
+z-index: 11010;
+}
+.img-front {
+z-index: 11100;
+opacity: 1;
+border:1px;
+margin: auto;
+}
+.show {
+position: relative;
+max-width: 1200px;
+max-height: 800px;
+overflow: auto;
+}
 .file-drop {
 width: 90%;
 height: 100px;
@@ -13,8 +36,8 @@ margin: auto;
 </style>
 
 <!-- page content -->
-<div class="popup back" style="display:none;"></div>
-<div id="popup_front" class="popup front" style="display:none;">
+<div class="popup img-back" style="display:none;"></div>
+<div id="popup_front" class="popup img-front" style="display:none;">
 	<img id="popup_img">
 </div>
 
@@ -63,7 +86,7 @@ margin: auto;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 
 <script id="template" type="text/x-handlebars-template">
-	<div class="col-md-3 col-md-3 col-xs-6" data-src='{{fullName}}'>
+	<div class="col-md-3 col-md-3 col-xs-6 upload-item" data-src='{{fullName}}'>
 		<div class="x_panel">
 			<div class="x_title mailbox-attachment-info">
 				<a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
@@ -120,9 +143,15 @@ margin: auto;
 			var imgTag = $("#popup_img");
 			imgTag.attr("src", fileLink);
 			
-			$(".popup").show("slow");
+			$(".img-back").show("slow");
+			$(".img-front").show("slow");
 			imgTag.addClass("show");
 		}
+	});
+	
+	$("#popup_img").on("click", function() {
+		$(".img-front").hide("slow");
+		$(".img-back").hide("slow");
 	});
 	
 	$(".upload-list").on("click", ".delbtn", function(event) {
@@ -137,7 +166,7 @@ margin: auto;
 			dataType: "text",
 			success: function(result) {
 				if(result == "deleted") {
-					that.closest("li").remove();
+					that.closest(".upload-item").remove();
 				}
 			}
 		});

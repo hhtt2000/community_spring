@@ -172,7 +172,7 @@ z-index: 11000;
 <script type="text/javascript" src="/resources/js/upload.js"></script>
 
 <script id="templateAttach" type="text/x-handlebars-template">
-	<div class="col-md-3 col-md-3 col-xs-6" data-src='{{fullName}}'>
+	<div class="col-md-3 col-md-3 col-xs-6 upload-item" data-src='{{fullName}}'>
 		<div class="x_panel">
 			<div class="x_title mailbox-attachment-info">
 				<a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
@@ -463,7 +463,7 @@ z-index: 11000;
 			}
 			
 			var arr = [];
-			$(".upload-list li").each(function(index) {
+			$(".upload-list .upload-item").each(function(index) {
 				arr.push($(this).attr("data-src"));
 			});
 			

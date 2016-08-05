@@ -20,7 +20,7 @@ function getFileInfo(fullName) {
 	} else {
 		imgsrc = "/resources/img/file.png";
 		fileLink = fullName.substr(12);
-		getLink = "displayFile?fileName="+fullName;
+		getLink = "/displayFile?fileName="+fullName;
 	}
 	
 	fileName = fileLink.substr(fileLink.indexOf("_")+1);
