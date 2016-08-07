@@ -29,7 +29,7 @@
      <div class="login_wrapper">
        <div class="animate form login_form">
          <section class="login_content">
-           <form action="/user/loginPost" method="post">
+           <form action="/user/login" method="post">
              <h1>Login Form</h1>
              <div>
                <input type="text" name="userid" class="form-control" placeholder="사용자 아이디" />

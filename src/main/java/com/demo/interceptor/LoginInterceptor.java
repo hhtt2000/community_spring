@@ -65,6 +65,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				String refererURI = "/" + splitValue[splitValue.length-1];
 				
 				session.setAttribute("dest", refererURI);
+				logger.info("refererURI: "+refererURI);
 			}
 			
 			return true;
